@@ -1,35 +1,25 @@
-import { Accordion, ListGroup, ListGroupItem } from "react-bootstrap"
+import { ListGroup, ListGroupItem } from "react-bootstrap"
 import AccordionBody from "react-bootstrap/esm/AccordionBody"
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader"
 import AccordionItem from "react-bootstrap/esm/AccordionItem"
+import { Deal } from "./DataTypes"
 
 type DealInfoProps = {
-    id: number,
-    dealCompany: string,
-    dealCard?: string,
-    dealDesc?: string,
-    dealCouponCode?: string,
-    redeemWebsite?: string
+    deal : Deal
 }
 
 export const DealInfo = (props: DealInfoProps) => {
-    const {
-        dealCard = "",
-        dealDesc = "",
-        dealCouponCode = "",
-        redeemWebsite = ""
-    } = props
 
     return (
         <div>
-            <AccordionItem eventKey={props.id.toString()}>
-                <AccordionHeader>{props.dealCompany}</AccordionHeader>
+            <AccordionItem eventKey={props.deal.id.toString()}>
+                <AccordionHeader>{props.deal.dealCompany}</AccordionHeader>
                 <AccordionBody>
                     <ListGroup>
-                        <ListGroupItem>Card: {props.dealCard}</ListGroupItem>
-                        <ListGroupItem>Deal Type: {props.dealDesc}</ListGroupItem>
-                        <ListGroupItem>Coupon Code: {props.dealCard}</ListGroupItem>
-                        <ListGroupItem>Redeem Website: {props.redeemWebsite}</ListGroupItem>
+                        <ListGroupItem>Card: {props.deal.dealCard}</ListGroupItem>
+                        <ListGroupItem>Deal Type: {props.deal.dealDesc}</ListGroupItem>
+                        <ListGroupItem>Coupon Code: {props.deal.dealCouponCode}</ListGroupItem>
+                        <ListGroupItem>Redeem Website: {props.deal.redeemWebsite}</ListGroupItem>
                     </ListGroup>
                 </AccordionBody>
             </AccordionItem>
