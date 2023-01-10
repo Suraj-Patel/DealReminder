@@ -1,7 +1,10 @@
 type HeadingProps = {
-    children: string
+    children: string,
+    styles: React.CSSProperties
 }
 
 export const Heading = (props: HeadingProps) => {
-    return <h2>{props.children}</h2>
+    return <header className="h1 d-flex flex-wrap justify-content-center py-3" style={props.styles}>
+        {props.children}
+    </header>
 }

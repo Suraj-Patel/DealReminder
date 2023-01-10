@@ -3,19 +3,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Tabs, Tab, Container, Card } from 'react-bootstrap';
 import { Heading } from './components/Heading';
 import { CurrentDeals } from './components/CurrentDeals';
+import { SampleDeals } from './data/SampleDeals';
+import { AddDeal } from './components/AddDeal';
 
 function App() {
+
+  const[currentDeals, setCurrentDeals] = useState(SampleDeals.Deals);
+
   return (
     <Container fluid>
-      <Heading>Deal Reminder</Heading>
-      <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
+      <Heading styles={{textAlign: 'center'}}>Deal Reminder</Heading>
+      <Tabs defaultActiveKey="deals" className="mb-3">
         <Tab eventKey="deals" title="Deals">
-          <CurrentDeals></CurrentDeals>        
+          <CurrentDeals currentDeals={currentDeals}></CurrentDeals>        
         </Tab>
         <Tab eventKey="addDeal" title="Add New Deal">
-          <Card>
-            <Card.Body></Card.Body>
-          </Card>          
+          <AddDeal currentDeals={currentDeals}></AddDeal>      
         </Tab>
       </Tabs>
     </Container>
