@@ -1,23 +1,48 @@
-import { useState } from "react";
-import { Accordion, Card } from "react-bootstrap"
+import { useState, useEffect } from "react";
+import { Accordion } from "react-bootstrap"
 import { DealInfo } from "./DealInfo";
-import { SampleDeals } from "../data/SampleDeals";
 import { Deal } from "./DataTypes"
-
+import { saveCurrentDealsToChromeStorage } from "../scripts/ChromeApiWrapper";
 
 type CurrentDealsProps = {
-    currentDeals : Deal[]
+    currentDeals : Deal[],
+    setCurrentDeals : Function    
 }
 
 export const CurrentDeals = (props: CurrentDealsProps) => {
+
+    const [deleteId, setDeleteId] = useState(0);
+
+    // In case of deletion, refresh indexes to keep them as 1 to n for n deals.
+    const refreshDealIndexes = (deals: Deal[]) => {
+        let counter = 1;
+        deals.map((deal: Deal) => {
+            deal.id = counter;
+            counter += 1;
+        });
+    }
+
+    useEffect(() => {
+        if (deleteId > 0) {
+            console.log("Delete ID: " + deleteId);
+            props.currentDeals = props.currentDeals.filter((deal) => deal.id != deleteId)
+            refreshDealIndexes(props.currentDeals);
+            props.setCurrentDeals(props.currentDeals); 
+            saveCurrentDealsToChromeStorage(props.currentDeals);   
+            setDeleteId(0);        
+        }
+    });
+
     return (
         <Accordion>
             {
-                props.currentDeals.map((deal) => {
-                    return (
-                        <DealInfo deal={deal}></DealInfo>
-                    )
-                })
+                props.currentDeals
+                    .filter((deal) => deal.id != deleteId)
+                    .map((deal) => {
+                        return (
+                            <DealInfo deal={deal} setDeleteId={setDeleteId}></DealInfo>
+                        )
+                    })
             }
         </Accordion>
     )
