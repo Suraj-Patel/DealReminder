@@ -12,5 +12,9 @@
        "48": "logo192.png",
        "128": "logo192.png"
    },
-   "permissions": ["storage"]
+   "permissions": ["storage", "webNavigation", "notifications"],
+   "background" : {
+        "service_worker": "background.js",
+        "type": "module"
+   }
 }

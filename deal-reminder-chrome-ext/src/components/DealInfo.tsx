@@ -1,10 +1,9 @@
-import { Button, ButtonGroup, Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap"
+import { Button, Col, Container, ListGroup, ListGroupItem, Row } from "react-bootstrap"
 import AccordionBody from "react-bootstrap/esm/AccordionBody"
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader"
 import AccordionItem from "react-bootstrap/esm/AccordionItem"
 import { Deal } from "./DataTypes"
 import { MdDelete } from 'react-icons/md'
-import { getCurrentDealsFromChromeStorage, saveCurrentDealsToChromeStorage } from "../scripts/ChromeApiWrapper"
 
 type DealInfoProps = {
     deal : Deal,

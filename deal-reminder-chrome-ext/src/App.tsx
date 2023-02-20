@@ -5,15 +5,17 @@ import { Heading } from './components/Heading';
 import { CurrentDeals } from './components/CurrentDeals';
 import { AddDeal } from './components/AddDeal';
 import { getCurrentDealsFromChromeStorage } from './scripts/ChromeApiWrapper';
+import { About } from './components/About';
 
 function App() {
   const[currentDeals, setCurrentDeals] = useState(Array());
 
   useEffect(() => {
     const populateUserDeals = async () => {
-      console.log("Loading current deals from storage")
+      console.log("Initial loading of deals from storage.")
       setCurrentDeals(await getCurrentDealsFromChromeStorage());
     }
+    
     populateUserDeals();
   }, []);
 
@@ -29,6 +31,9 @@ function App() {
           </Tab>
           <Tab eventKey="addDeal" title="Add New Deal">
             <AddDeal setCurrentDeals={setCurrentDeals}></AddDeal>      
+          </Tab>
+          <Tab eventKey="about" title="About Us">
+            <About></About>
           </Tab>
         </Tabs>
       </Row>

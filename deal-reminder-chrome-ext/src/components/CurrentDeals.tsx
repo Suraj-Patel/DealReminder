@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Accordion } from "react-bootstrap"
 import { DealInfo } from "./DealInfo";
 import { Deal } from "./DataTypes"
-import { saveCurrentDealsToChromeStorage } from "../scripts/ChromeApiWrapper";
+import { saveCurrentDealsToChromeStorage, saveRedeemWebsitesToChromeStorage } from "../scripts/ChromeApiWrapper";
 
 type CurrentDealsProps = {
     currentDeals : Deal[],
@@ -22,13 +22,26 @@ export const CurrentDeals = (props: CurrentDealsProps) => {
         });
     }
 
+    const extractRedeemWebsitesFromCurrentDeals = (deals: Deal[]) => {
+        let redeemWebsites: String[] = [];
+
+        deals.forEach((deal) => {
+            if (deal.redeemWebsite) {
+                redeemWebsites.push(deal.redeemWebsite);
+            }
+        });
+
+        return redeemWebsites;
+    }
+
     useEffect(() => {
         if (deleteId > 0) {
             console.log("Delete ID: " + deleteId);
             props.currentDeals = props.currentDeals.filter((deal) => deal.id != deleteId)
             refreshDealIndexes(props.currentDeals);
-            props.setCurrentDeals(props.currentDeals); 
-            saveCurrentDealsToChromeStorage(props.currentDeals);   
+            props.setCurrentDeals(props.currentDeals);
+            saveCurrentDealsToChromeStorage(props.currentDeals);
+            saveRedeemWebsitesToChromeStorage(extractRedeemWebsitesFromCurrentDeals(props.currentDeals));
             setDeleteId(0);        
         }
     });
